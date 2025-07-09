@@ -166,7 +166,7 @@ void initGame(GLFWwindow* window, CommandLineOptions gameOptions) {
     glfwSetCursorPosCallback(window, mouseCallback);
 
     shader = new Gloom::Shader();
-    shader->makeBasicShader("../../res/shaders/simple.vert", "../../res/shaders/ocean.frag");
+    shader->makeBasicShader("../../res/shaders/simple.vert", "../../res/shaders/simple.frag");
     shader->activate();
     GLuint shaderProgram = shader->get();
     u_time       = glGetUniformLocation(shaderProgram, "iTime");
