@@ -147,11 +147,21 @@ float udTriangle( vec3 p, vec3 a, vec3 b, vec3 c )
      dot(nor,pa)*dot(nor,pa)/dot2(nor) );
 }
 
+vec3 rotate(vec3 v, float angle, vec3 axis)
+{
+    // Make sure the axis is normalized
+    axis = normalize(axis);
+    
+    float c = cos(angle);
+    float s = sin(angle);
+    // Rodrigues’ rotation formula
+    return v * c + cross(axis, v) * s + axis * dot(axis, v) * (1.0 - c);
+}
 
 
 
 vec3 animateFish(vec3 p) {
-    float waveFrequency = 1.0;
+    float waveFrequency = fract(sin(fishTime) * 43758.5453) * 5.0;
     float waveAmplitude = 0.1;
 
     float nose = 0.0;
@@ -164,6 +174,9 @@ vec3 animateFish(vec3 p) {
     // Apply sine wave deformation toward the Z axis
     p.z += sin(p.x * waveFrequency + (rand(repeatIndex.xy) + iTime) * 10.0) 
          * waveAmplitude * factor;
+
+    p = rotate(p, (sin(p.x * waveFrequency + (rand(repeatIndex.xy) + iTime) * 30.0) * waveAmplitude * factor * 10.0), vec3(1., 0., 0.));
+
 
     return p;
 }
